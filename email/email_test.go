@@ -2,7 +2,6 @@ package email
 
 import (
 	"fmt"
-	"os"
 	"testing"
 
 	"github.com/s-ign/emailutils/config"
@@ -10,21 +9,12 @@ import (
 
 func TestCreateAuth(t *testing.T) {
 	auth1, err := config.CreateAuth(
-		"avery.carty@mojodomo.com",
-		"MOJO",
+		"test@test.com",
+		"testtesttest",
 	)
 	if err != nil {
-		return
+		t.Errorf("error: %v", err)
 	}
-	_, err2 := config.CreateAuth(
-		"avery.carty@mojodomo.com",
-		"MAJO",
-	)
-
-	_, err3 := config.CreateAuth(
-		"avery.carty@mojodomo.com",
-		"MIJO",
-	)
 
 	cases := []struct {
 		name string
@@ -32,20 +22,10 @@ func TestCreateAuth(t *testing.T) {
 		want string
 	}{
 		{
-			name: "works if MOJO envirnoment variable set",
+			name: "normal",
 			got:  fmt.Sprintf("%v", auth1),
 			want: fmt.Sprintf("%v", &config.Auth{
-				From: "avery.carty@mojodomo.com", Password: os.Getenv("MOJO")}),
-		},
-		{
-			name: "return error if environment variable is unset",
-			got:  fmt.Sprintf("%v", err2),
-			want: fmt.Sprintf("CreateAuth: password environment variable is unset"),
-		},
-		{
-			name: "return error if environment variable is set but blank",
-			got:  fmt.Sprintf("%v", err3),
-			want: fmt.Sprintf("CreateAuth: password environment variable blank"),
+				From: "test@test.com", Password: "testtesttest"}),
 		},
 	}
 	for _, c := range cases {

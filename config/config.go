@@ -1,10 +1,5 @@
 package config
 
-import (
-	"fmt"
-	"os"
-)
-
 // Auth .
 type Auth struct {
 	From     string
@@ -14,18 +9,10 @@ type Auth struct {
 // CreateAuth Creates authentcation object for sending email, requries that
 // passwords not be directly passed to this function, rather pass in the
 // environment variable string.
-func CreateAuth(from, passwordEnv string) (*Auth, error) {
-	env, ok := os.LookupEnv(passwordEnv)
-	if !ok {
-		return nil, fmt.Errorf("CreateAuth: password environment variable is unset")
-	}
-	if env == "" {
-		return nil, fmt.Errorf("CreateAuth: password environment variable blank")
-	}
-
+func CreateAuth(from, password string) (*Auth, error) {
 	return &Auth{
 		From:     from,
-		Password: os.Getenv(passwordEnv),
+		Password: password,
 	}, nil
 }
 
