@@ -1,4 +1,4 @@
-module github.com/s-ign/emailutils
+module github.com/S-ign/emailutils
 
 go 1.18
 

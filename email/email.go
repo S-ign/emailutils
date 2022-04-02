@@ -3,7 +3,7 @@ package email
 import (
 	"fmt"
 
-	"github.com/s-ign/emailutils/config"
+	"github.com/S-ign/emailutils/config"
 	"gopkg.in/gomail.v2"
 )
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/s-ign/emailutils/config"
+	"github.com/S-ign/emailutils/config"
 )
 
 func TestCreateAuth(t *testing.T) {
