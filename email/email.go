@@ -1,9 +1,7 @@
 package email
 
 import (
-	"bytes"
 	"fmt"
-	"html/template"
 
 	"github.com/s-ign/emailutils/config"
 	"gopkg.in/gomail.v2"
@@ -20,22 +18,7 @@ type Message struct {
 // NewMessage Creates a message object, if templatePath is supplied it will
 // apply message to template. Template must contain {{.Body}}, message
 // variable will replaces this placeholder
-func NewMessage(subject, message, templatePath string, to []string) (*Message, error) {
-
-	// embeds message into template, updating message string to its template html
-	// format
-	if templatePath != "" {
-		t, _ := template.ParseFiles(templatePath)
-		var body bytes.Buffer
-
-		t.Execute(&body, struct {
-			Body string
-		}{
-			Body: message,
-		})
-		message = body.String()
-	}
-
+func NewMessage(subject, message string, to []string) (*Message, error) {
 	return &Message{
 		subject: subject,
 		message: message,
@@ -43,8 +26,7 @@ func NewMessage(subject, message, templatePath string, to []string) (*Message, e
 	}, nil
 }
 
-// SendEmail wraper method around gomail.NewMessage, makes applying html
-// templates to messages simpler
+// SendEmail wraper method around gomail.NewMessage
 func SendEmail(auth *config.Auth, smtp *config.SMTPConfig, message *Message) error {
 	gm := gomail.NewMessage()
 	gm.SetHeader("From", auth.From)
